@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="fill_parent"
+    android:background="@color/colorPrimaryDark"
+     android:layout_width="fill_parent">
+
+<LinearLayout
+   
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="20dp"
+    android:orientation="vertical"
+    tools:context=".InsertUpdateFragment"
+    android:background="@color/colorPrimaryDark">
+
+    <EditText
+        android:id="@+id/edit_Insert_Title"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="20dp"
+        android:layout_weight="1"
+        android:enabled="true"
+        android:hint="Title">
+
+    </EditText>
+
+    <EditText
+        android:id="@+id/edit_Insert_Description"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="20dp"
+        android:layout_weight="1"
+        android:enabled="true"
+        android:hint="Description">
+
+    </EditText>
+
+    <Button
+        android:id="@+id/edit_btn_data"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="20dp"
+        android:layout_weight="1"
+        android:background="@color/colorAccent"
+        android:enabled="true"
+        android:hint="Enter Date" />
+
+    <Button
+        android:id="@+id/edit_btn_time"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="20dp"
+        android:layout_weight="1"
+        android:background="@color/colorAccent"
+        android:enabled="true"
+        android:hint="Enter Time" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/edit_check_insert"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:enabled="true" />
+        <Spinner
+            android:id="@+id/edit_spinner"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:enabled="true"
+
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_margin="20dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/edit_btn_save"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/colorAccent"
+            android:layout_margin="5dp"
+            android:text="Save" />
+
+        <Button
+            android:id="@+id/edit_btn_edit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:text="Edite" />
+
+        <Button
+            android:id="@+id/edit_btn_cancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/colorAccent"
+            android:layout_margin="5dp"
+            android:text="Cancel" />
+
+        <Button
+            android:id="@+id/Delete"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/colorAccent"
+            android:layout_margin="5dp"
+            android:text="Delete" />
+
+        <Button
+            android:id="@+id/DeleteALL"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:background="@color/colorAccent"
+            android:layout_margin="5dp"
+            android:text="DeleteALL" />
+    </LinearLayout>
+
+</LinearLayout>
+</ScrollView>

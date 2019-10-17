@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+  android:background="@color/colorPrimaryDark"
+    android:orientation="vertical"
+    android:paddingLeft="24dp"
+    android:paddingTop="56dp"
+    android:paddingRight="24dp"
+    tools:context=".LoginFragment">
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="match_parent"
+        android:layout_height="125dp"
+        android:layout_margin="20dp"
+        android:src="@drawable/index3"
+        app:srcCompat="@drawable/ali" />
+
+    <EditText
+        android:id="@+id/name_login1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:hint="Enter Name"
+        android:fontFamily="@font/sketchy"
+        android:includeFontPadding="false"
+        android:background="#F5A0A0"
+        tools:ignore="MissingConstraints"
+        android:drawableLeft="@drawable/ic_account_circle_black_24dp"
+        android:paddingLeft="10dp"
+        android:padding="15dp"/>
+
+    <EditText
+        android:id="@+id/password_login1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:fontFamily="@font/sketchy"
+        android:hint="Enter Password"
+        android:inputType="textPassword"
+        android:paddingLeft="10dp"
+        android:background="#F5A0A0"
+        android:padding="15dp"
+        android:drawableLeft="@drawable/ic_https_black_24dp"
+
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="@color/colorPrimary"
+        android:padding="1dp"
+
+        >
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:layout_weight="1"
+            android:background="@color/colorPrimaryDark"
+            android:padding="20dp"
+            android:text="login"
+            android:textColor="#050505">
+
+        </Button>
+
+        <Button
+            android:id="@+id/btn_sign"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:layout_weight="1"
+            android:background="@color/colorPrimaryDark"
+            android:padding="20dp"
+            android:text="sign"
+            android:textColor="#030303"
+
+           >
+
+        </Button>
+
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+    <item
+        android:id="@+id/id_account"
+        android:icon="@drawable/ic_launcher_account_foreground"
+        android:title="Item"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/id_sreach"
+        android:icon="@drawable/ic_launcher_sreach_foreground"
+        android:title="Item"
+        app:showAsAction="always" />
+</menu>
