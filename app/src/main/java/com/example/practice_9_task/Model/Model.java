@@ -1,14 +1,17 @@
 package com.example.practice_9_task.Model;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 public class Model implements Serializable {
+
     private String mTitle;
     private String mDescription;
     private  String mTime;
     private String mDate;
     private  int mstate;
     private  boolean mStatebool;
+    private  UUID key;
 
     public boolean ismStatebool() {
         return mStatebool;
@@ -18,15 +21,17 @@ public class Model implements Serializable {
         this.mStatebool = mStatebool;
     }
 
-    public String getKey() {
+    public Model() {
+        setKey(UUID.randomUUID());
+    }
+
+    public UUID getKey() {
         return key;
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    public void setKey(UUID uuid) {
+        this.key = uuid;
     }
-
-    private  String key;
     public int getMstate() {
         return mstate;
     }

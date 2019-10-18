@@ -40,15 +40,14 @@ import java.io.Serializable;
 public class EditFragment extends DialogFragment {
     public static final String KEY_MODEL = "key_model";
     public static final String KEY_NAME = "tab name";
-    public static final String SAVE_INTENT = "com.example.practice_9_task_save intent";
     public static final String EDIT_TRUE = "edit_true";
-    public static final String SAVE_VALUE = "save value";
     public static final int REQUEST_CODE_EDIT_FRAGMENT = 1;
     public static final String DATA_SAVE_INSTANCE = "data_saveInstance";
     public static final String TIME_SAVE_INSTANCE = "time_saveInstance";
     public static final String FLAG_VISIBLE = " com.example.practice_9_task_FlagVisible";
     public static final String FLAG_VISIBLE1 = "Flag_Visible";
     public static final String TABNAME_SPRINER = "com.example.practice_9_task_TABNAME_SPRINER";
+    public static final String PASWORD_EDIT_FRAGMENT = "com.example.practice_9_task_TABNAME_pasword";
     EditText mEditTextdescrition, mEditTextTitle;
     Button mBtnDate, mBtnTime, mBtnSave, mBtnCancle, mBtnEdit,mBtnDelete,mBtnDeleteAll;
     CheckBox mCheckBox;
@@ -63,11 +62,12 @@ public class EditFragment extends DialogFragment {
     private String dateFormat;
     String saveTime, saveDate;
 
-    public static EditFragment newInstance(Model model, String name) {
+    public static EditFragment newInstance(Model model, String name,String pasword) {
 
         Bundle args = new Bundle();
         args.putSerializable(KEY_MODEL, model);
         args.putString(KEY_NAME, name);
+        args.putString(PASWORD_EDIT_FRAGMENT,pasword);
         EditFragment fragment = new EditFragment();
         fragment.setArguments(args);
         return fragment;
@@ -168,7 +168,7 @@ public class EditFragment extends DialogFragment {
                 if (!(mEditTextTitle.getText().toString().matches("") && mEditTextdescrition.getText().toString().matches("") &&
                         mBtnDate.getText().toString().matches("") && (mBtnTime.getText().toString().matches("")))) {
                     Model model = getModel();
-                    Repositroy.newInstance(getContext()).replace(getArguments().getString(KEY_NAME), mModel, model);
+                    Repositroy.newInstance(getContext()).replace(getArguments().getString(KEY_NAME),getArguments().getString(PASWORD_EDIT_FRAGMENT), mModel, model);
                     FlagVisible = 1;
                     Intent intent = new Intent();
                     intent.putExtra(EDIT_TRUE, true);
@@ -193,9 +193,6 @@ public class EditFragment extends DialogFragment {
                    intent.putExtra(TABNAME_SPRINER, mSpinnername );
                    Fragment fragment = getTargetFragment();
                    fragment.onActivityResult(REQUEST_CODE_EDIT_FRAGMENT, Activity.RESULT_OK, intent);
-                   Snackbar snackbar = Snackbar
-                           .make(mView, "SuccessFull Delete", Snackbar.LENGTH_LONG);
-                   snackbar.show();
                    dismiss();
 
 
@@ -218,7 +215,7 @@ public class EditFragment extends DialogFragment {
                alertDialog2.setPositiveButton("yes", new DialogInterface.OnClickListener() {
                    @Override
                    public void onClick(DialogInterface dialogInterface, int i) {
-                       Repositroy.newInstance(getContext()).delete(mModel,getArguments().getString(KEY_NAME));
+                       Repositroy.newInstance(getContext()).deleteall(getArguments().getString(KEY_NAME),getArguments().getString(PASWORD_EDIT_FRAGMENT));
                        Intent intent = new Intent();
                        intent.putExtra(EDIT_TRUE, true);
                        intent.putExtra(FLAG_VISIBLE, FlagVisible);

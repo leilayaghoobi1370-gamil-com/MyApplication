@@ -12,12 +12,13 @@ import com.example.practice_9_task.database.Dbhelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
 import static com.example.practice_9_task.database.DbScema.TABLE;
 import static com.example.practice_9_task.database.DbScema.USER;
 
 public class Repositroy {
-    public static Integer flag=1;
+    public static Integer flag = 1;
     public static final String TAG = "TAG";
     private ArrayList<Model> mMaptodo = new ArrayList<>();
     private ArrayList<Model> mMapdone = new ArrayList<>();
@@ -68,15 +69,14 @@ public class Repositroy {
             cursor2.close();
 
         }
-        if (model.getMstate() == 0 )
+        if (state.equals("TODO"))
             return mMaptodo;
-        else if (model.getMstate() == 2)
-        return mMapdone;
-        else if (model.getMstate() == 1)
+        else if (state.equals("DONE"))
+            return mMapdone;
+        else if (state.equals("DOING"))
             return mMapding;
         else
             return new ArrayList<>();
-
 
 
     }
@@ -96,8 +96,7 @@ public class Repositroy {
         mSQLiteDatabase = dbhelper.getWritableDatabase();
 
     }
-
-
+    
     public void add(String name, String password, String title, String desc, boolean state, String date, String time, int intstate) {
 
         Model model = new Model();
@@ -143,41 +142,84 @@ public class Repositroy {
         return true;
     }
 
-    public void replace(String key, Model lastmodel, Model newmodel) {
+    public void replace(String name, String password, Model lastmodel, Model newmodel) {
+        mSQLiteDatabase.delete(TABLE.TABLE_NAME, TABLE.Cols.kEYMODLE + " like ? ", new String[]{lastmodel.getKey().toString()});
+        mSQLiteDatabase.insert(TABLE.TABLE_NAME, null, getcontentvalue(newmodel, name, password));
 
     }
 
 
-    public boolean delete(Model model, String key) {
-        return ((mSQLiteDatabase.delete(TABLE.TABLE_NAME, model.getTitle() + "= ?", new String[]{TABLE.Cols.Title})) > 0);
+        public boolean delete (Model model, String key){
+            Cursor cursor = mSQLiteDatabase.rawQuery(" DELETE FROM " +
+                    TABLE.TABLE_NAME + " WHERE "
+                    + TABLE.Cols.Title + " = ? AND " +
+                    TABLE.Cols.DESCRIPTION + " = ? AND " +
+                    TABLE.Cols.DATE + " = ? AND " +
+                    TABLE.Cols.TIME + " = ? ", new String[]{
+                    model.getTitle(), model.getDescription(),
+                    model.getDate(), model.getTime()});
+            try {
 
-    }
+                cursor.moveToFirst();
+                if (cursor == null && cursor.getCount() == 0)
+                    return false;
 
-    private ContentValues getcontentvalue(Model model, String name, String password) {
-        ContentValues values = new ContentValues();
-        values.put(TABLE.Cols.Title, model.getTitle());
-        values.put(TABLE.Cols.DESCRIPTION, model.getDescription());
-        values.put(TABLE.Cols.TIME, model.getTime());
-        values.put(TABLE.Cols.DATE, model.getDate());
-        values.put(TABLE.Cols.SPINNERSTATE, model.getMstate());
-        values.put(TABLE.Cols.STATE, model.getMstate());
-        values.put(TABLE.Cols.STATEBOOL, model.ismStatebool());
-        values.put(TABLE.Cols.IDUSER, sendIdUser(name, password));
-        return values;
-    }
+                return true;
 
-    private String sendIdUser(String name, String password) {
-        Cursor cursor1 = mSQLiteDatabase.rawQuery(" SELECT  " + USER.Cols.ID + "  FROM " + USER.TABLE_NAME + " WHERE " + USER.Cols.NAME +
-                " = ? AND " + USER.Cols.PASSWIRDID + " = ?", new String[]{name, password});
-        cursor1.moveToFirst();
-        if (cursor1 == null
-                || cursor1.getCount() == 0) {
-            cursor1.close();
-            return "-1";
+
+            } finally {
+                cursor.close();
+            }
+
+
         }
 
-        return cursor1.getString(cursor1.getColumnIndex(USER.Cols.ID));
+        public boolean deleteall (String name, String pasword){
+            String id = sendIdUser(name, pasword);
+            Cursor cursor = mSQLiteDatabase.rawQuery(" DELETE FROM " + TABLE.TABLE_NAME + " WHERE " + TABLE.Cols.IDUSER + " = ?", new String[]{id});
+            cursor.moveToFirst();
+            if (cursor == null && cursor.getCount() == 0)
+                return false;
+            try {
+
+                if (cursor.getCount() > 0)
+                    return true;
+                return false;
+
+            } finally {
+                cursor.close();
+            }
+
+
+        }
+
+        private ContentValues getcontentvalue (Model model, String name, String password){
+            ContentValues values = new ContentValues();
+            values.put(TABLE.Cols.kEYMODLE, model.getKey().toString());
+            values.put(TABLE.Cols.Title, model.getTitle());
+            values.put(TABLE.Cols.DESCRIPTION, model.getDescription());
+            values.put(TABLE.Cols.TIME, model.getTime());
+            values.put(TABLE.Cols.DATE, model.getDate());
+            values.put(TABLE.Cols.SPINNERSTATE, model.getMstate());
+            values.put(TABLE.Cols.STATE, model.getMstate());
+            values.put(TABLE.Cols.STATEBOOL, model.ismStatebool());
+            values.put(TABLE.Cols.IDUSER, sendIdUser(name, password));
+            return values;
+        }
+
+
+        private String sendIdUser (String name, String password){
+            Cursor cursor1 = mSQLiteDatabase.rawQuery(" SELECT  " + USER.Cols.ID + "  FROM " + USER.TABLE_NAME + " WHERE " + USER.Cols.NAME +
+                    " = ? AND " + USER.Cols.PASSWIRDID + " = ?", new String[]{name, password});
+            cursor1.moveToFirst();
+            if (cursor1 == null
+                    || cursor1.getCount() == 0) {
+                cursor1.close();
+                return "-1";
+            }
+
+            return cursor1.getString(cursor1.getColumnIndex(USER.Cols.ID));
+
+        }
 
     }
-
-}

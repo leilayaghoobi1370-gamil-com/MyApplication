@@ -3,7 +3,7 @@ package com.example.practice_9_task;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.resources.R;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -12,6 +12,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -23,18 +24,19 @@ import com.google.android.material.tabs.TabLayout;
 public class ListTaskActivity extends AppCompatActivity {
     public static final String KEYNAME = "com.example.practice_9_task_key";
     public static final String TABNAME = "com.example.practice_9_task_tabname";
-    public static final String KEYPASSWORD="com.example.practice_9_task_PASSWORD";
+    public static final String KEYPASSWORD = "com.example.practice_9_task_PASSWORD";
     public static final String PASSWORD = "com.example.practice_9_task_PASSWORD";
-    ViewPager mViewPager;
-    TabLayout mTabLayout;
-    MenuItem sreach, account;
-    TabFragment.RecycleAdapter mRecycleAdapter;
+  private ViewPager mViewPager;
+    private  TabLayout mTabLayout;
+    private MenuItem sreach, account;
+    private TabFragment.RecycleAdapter mRecycleAdapter;
+    private TapPagerAdapter tapPagerAdapter;
     String tabname = "";
 
-    public static Intent newIntet(Context context, String name,String password, String tabname) {
+    public static Intent newIntet(Context context, String name, String password, String tabname) {
         Intent intent = new Intent(context, ListTaskActivity.class);
-        intent.putExtra(KEYNAME,name);
-        intent.putExtra(PASSWORD,password);
+        intent.putExtra(KEYNAME, name);
+        intent.putExtra(PASSWORD, password);
         intent.putExtra(TABNAME, tabname);
         return intent;
     }
@@ -45,16 +47,33 @@ public class ListTaskActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list_task);
         mViewPager = findViewById(R.id.pager);
         mTabLayout = findViewById(R.id.tabMode);
-        mViewPager.setAdapter(new TapPagerAdapter(getSupportFragmentManager()));
+        tapPagerAdapter=new TapPagerAdapter(getSupportFragmentManager());
+        mViewPager.setAdapter(tapPagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
         mRecycleAdapter = new TabFragment().new RecycleAdapter(Repositroy.newInstance(getApplicationContext())
-                .getArrayList(getIntent().getStringExtra(KEYNAME), getIntent().getStringExtra(PASSWORD),getIntent().getStringExtra(TABNAME)),
+                .getArrayList(getIntent().getStringExtra(KEYNAME), getIntent().getStringExtra(PASSWORD), getIntent().getStringExtra(TABNAME)),
                 this,
                 getIntent().getStringExtra(KEYNAME));
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                tapPagerAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
@@ -79,7 +98,6 @@ public class ListTaskActivity extends AppCompatActivity {
 
     }
 
-
     class TapPagerAdapter extends FragmentPagerAdapter {
 
         public static final int REQUEST_CODE = 0;
@@ -92,11 +110,12 @@ public class ListTaskActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return TabFragment.newInstance(tabname = "TODO", getIntent().getStringExtra(KEYNAME),getIntent().getStringExtra(KEYPASSWORD));
+                    return TabFragment.newInstance(tabname = "TODO", getIntent().getStringExtra(KEYNAME), getIntent().getStringExtra(KEYPASSWORD));
                 case 1:
-                    return TabFragment.newInstance(tabname = "DONE", getIntent().getStringExtra(KEYNAME),getIntent().getStringExtra(KEYPASSWORD));
+
+                    return TabFragment.newInstance(tabname = "DONE", getIntent().getStringExtra(KEYNAME), getIntent().getStringExtra(KEYPASSWORD));
                 default:
-                    return  TabFragment.newInstance(tabname = "DOING", getIntent().getStringExtra(KEYNAME),getIntent().getStringExtra(KEYPASSWORD));
+                    return TabFragment.newInstance(tabname = "DOING", getIntent().getStringExtra(KEYNAME), getIntent().getStringExtra(KEYPASSWORD));
             }
 
         }
@@ -120,7 +139,6 @@ public class ListTaskActivity extends AppCompatActivity {
                 case 1:
                     return "DONE";
                 default:
-
                     return "DOING";
             }
         }

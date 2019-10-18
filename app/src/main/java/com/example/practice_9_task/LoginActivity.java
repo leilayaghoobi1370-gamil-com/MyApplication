@@ -1,7 +1,7 @@
 package com.example.practice_9_task;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.resources.R;
+
 import androidx.fragment.app.FragmentManager;
 
 import android.content.Context;

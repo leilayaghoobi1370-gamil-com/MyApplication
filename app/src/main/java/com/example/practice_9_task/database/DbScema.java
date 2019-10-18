@@ -9,6 +9,7 @@ public class DbScema {
         public static final class Cols {
             public final static String ID = " _id ";
             public final static String Title = "_title";
+            public final static String kEYMODLE = " _keymodle ";
             public final static String DESCRIPTION = "_description";
             public final static String DATE = "_date";
             public final static String TIME = "_time";

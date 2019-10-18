@@ -7,7 +7,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.resources.R;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -34,7 +34,7 @@ public class TabFragment extends Fragment {
     public static final String KEY_NAMETAB = "nametab";
     public static final String KEYNAME = "key";
     public static final String KEYPASSWORD = "KEYPASSWORD";
-    RecyclerView mRecyclerView;
+    private RecyclerView mRecyclerView;
     private FloatingActionButton mFloatingActionButton;
     View mView1;
     RecycleAdapter recycleAdapter;
@@ -66,6 +66,7 @@ public class TabFragment extends Fragment {
                 getArguments().getString((KEYPASSWORD)), getArguments().getString(KEY_NAMETAB)), getContext()
                 , (getArguments().getString(KEY_NAMETAB)) + getArguments().getString(KEYNAME));
         mRecyclerView.setAdapter(recycleAdapter);
+        recycleAdapter.notifyDataSetChanged();
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -101,6 +102,7 @@ public class TabFragment extends Fragment {
         Model model = new Model();
         String mKey;
 
+
         public RecycleAdapter(ArrayList<Model> arrayList, Context context, String key) {
             mArrayList = arrayList;
             mContext = context;
@@ -129,7 +131,8 @@ public class TabFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     FragmentManager manager = ((AppCompatActivity) mContext).getSupportFragmentManager();
-                    EditFragment editFragment = EditFragment.newInstance(model, getArguments().getString(KEYNAME));
+                    EditFragment editFragment = EditFragment.newInstance(model,
+                            getArguments().getString(KEYNAME), getArguments().getString(KEYPASSWORD));
                     editFragment.setTargetFragment(TabFragment.this, 1);
                     editFragment.show(manager, EDIT_FRAGMENT);
 
@@ -188,9 +191,6 @@ public class TabFragment extends Fragment {
         recycleAdapter.setArrayList(Repositroy.newInstance(getActivity()).getArrayList(getArguments()
                 .getString(KEYNAME), getArguments().getString(KEYPASSWORD), getArguments().getString(KEY_NAMETAB))
         );
-        Log.i("TAG", "onActivityResult: " +
-                Repositroy.newInstance(getActivity()).getArrayList(getArguments()
-                        .getString(KEYNAME), getArguments().getString(KEYPASSWORD), getArguments().getString(KEY_NAMETAB)).size());
         recycleAdapter.notifyDataSetChanged();
 
 
