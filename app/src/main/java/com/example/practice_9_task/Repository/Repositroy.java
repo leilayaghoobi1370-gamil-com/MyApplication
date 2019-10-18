@@ -96,7 +96,7 @@ public class Repositroy {
         mSQLiteDatabase = dbhelper.getWritableDatabase();
 
     }
-    
+
     public void add(String name, String password, String title, String desc, boolean state, String date, String time, int intstate) {
 
         Model model = new Model();
@@ -107,7 +107,7 @@ public class Repositroy {
         model.setmStatebool(state);
         model.setMstate(intstate);
         ContentValues contentValues = getcontentvalue(model, name, password);
-        mSQLiteDatabase.insert(TABLE.TABLE_NAME, null, contentValues);
+       long i= mSQLiteDatabase.insert(TABLE.TABLE_NAME, null, contentValues);
 
 
     }
@@ -143,7 +143,20 @@ public class Repositroy {
     }
 
     public void replace(String name, String password, Model lastmodel, Model newmodel) {
-        mSQLiteDatabase.delete(TABLE.TABLE_NAME, TABLE.Cols.kEYMODLE + " like ? ", new String[]{lastmodel.getKey().toString()});
+      Cursor cursor= mSQLiteDatabase.rawQuery(" SELECT * FROM "+TABLE.TABLE_NAME, null);
+        cursor.moveToFirst();
+      if(cursor==null || cursor.getCount()==0)
+          cursor.close();
+     try {
+         while (!cursor.isAfterLast()) {
+             if (cursor.getString(cursor.getColumnIndex(TABLE.Cols.kEYMODLE)).equals(lastmodel.getKey().toString()))
+                 mSQLiteDatabase.delete(TABLE.TABLE_NAME, TABLE.Cols.kEYMODLE + " = ?",
+                         new String[]{cursor.getString(cursor.getColumnIndex(TABLE.Cols.kEYMODLE))});
+             cursor.moveToNext();
+         }
+     }finally {
+         cursor.close();
+     }
         mSQLiteDatabase.insert(TABLE.TABLE_NAME, null, getcontentvalue(newmodel, name, password));
 
     }
@@ -195,7 +208,7 @@ public class Repositroy {
 
         private ContentValues getcontentvalue (Model model, String name, String password){
             ContentValues values = new ContentValues();
-            values.put(TABLE.Cols.kEYMODLE, model.getKey().toString());
+            values.put(TABLE.Cols.kEYMODLE, String.valueOf( model.getKey()));
             values.put(TABLE.Cols.Title, model.getTitle());
             values.put(TABLE.Cols.DESCRIPTION, model.getDescription());
             values.put(TABLE.Cols.TIME, model.getTime());

@@ -22,7 +22,7 @@ public class Dbhelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL("CREATE TABLE " + TABLE.TABLE_NAME +
                 "( " +
-                TABLE.Cols.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                TABLE.Cols.ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 TABLE.Cols.kEYMODLE + "," +
                 TABLE.Cols.Title + "," +
                 TABLE.Cols.DESCRIPTION + "," +
