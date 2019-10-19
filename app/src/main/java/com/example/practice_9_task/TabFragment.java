@@ -38,7 +38,7 @@ public class TabFragment extends Fragment {
     public static final String KEYNAME = "key";
     public static final String KEYPASSWORD = "KEYPASSWORD";
     private RecyclerView mRecyclerView;
-    private List<Model> filterlist = new ArrayList<>();
+
     private FloatingActionButton mFloatingActionButton;
     View mView1;
     RecycleAdapter recycleAdapter;
@@ -94,9 +94,10 @@ public class TabFragment extends Fragment {
     public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.RecycleVeiwHolder> implements Filterable {
         public static final String EDIT_FRAGMENT = "Edit Fragment";
         public static final String TAG = "TAG";
-
+        private List<Model> filterlist = new ArrayList<>();
         public void setArrayList(ArrayList<Model> arrayList) {
             mArrayList = arrayList;
+            filterlist=arrayList;
         }
 
         private ArrayList<Model> mArrayList = new ArrayList<Model>();
