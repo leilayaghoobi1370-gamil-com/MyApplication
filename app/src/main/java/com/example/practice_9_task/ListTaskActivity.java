@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.practice_9_task.Repository.Repositroy;
@@ -28,7 +29,7 @@ public class ListTaskActivity extends AppCompatActivity {
     public static final String PASSWORD = "com.example.practice_9_task_PASSWORD";
   private ViewPager mViewPager;
     private  TabLayout mTabLayout;
-    private MenuItem sreach, account;
+    private MenuItem sreach, account,delete;
     private TabFragment.RecycleAdapter mRecycleAdapter;
     private TapPagerAdapter tapPagerAdapter;
     String tabname = "";
@@ -80,6 +81,20 @@ public class ListTaskActivity extends AppCompatActivity {
         menuInflater.inflate(R.menu.itemfragmentmenu, menu);
         account = menu.findItem(R.id.id_account);
         sreach = menu.findItem(R.id.id_sreach);
+        delete=menu.findItem(R.id.id_delete);
+        SearchView searchView= (SearchView) sreach.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                mRecycleAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
         return true;
     }
 
@@ -89,7 +104,7 @@ public class ListTaskActivity extends AppCompatActivity {
             case R.id.id_account:
                 this.finish();
                 return true;
-            case R.id.id_sreach:
+            case R.id.id_delete:
                 Toast.makeText(this, "create search", Toast.LENGTH_SHORT).show();
                 return true;
             default:

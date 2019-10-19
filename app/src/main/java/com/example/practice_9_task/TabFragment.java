@@ -17,6 +17,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.example.practice_9_task.Model.Model;
@@ -24,6 +26,7 @@ import com.example.practice_9_task.Repository.Repositroy;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,6 +38,7 @@ public class TabFragment extends Fragment {
     public static final String KEYNAME = "key";
     public static final String KEYPASSWORD = "KEYPASSWORD";
     private RecyclerView mRecyclerView;
+    private List<Model> filterlist = new ArrayList<>();
     private FloatingActionButton mFloatingActionButton;
     View mView1;
     RecycleAdapter recycleAdapter;
@@ -87,9 +91,8 @@ public class TabFragment extends Fragment {
 
     }
 
-    public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.RecycleVeiwHolder> {
+    public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.RecycleVeiwHolder> implements Filterable {
         public static final String EDIT_FRAGMENT = "Edit Fragment";
-
         public static final String TAG = "TAG";
 
         public void setArrayList(ArrayList<Model> arrayList) {
@@ -107,7 +110,7 @@ public class TabFragment extends Fragment {
             mArrayList = arrayList;
             mContext = context;
             mKey = key;
-
+           filterlist=new ArrayList<>(arrayList);
         }
 
 
@@ -149,6 +152,38 @@ public class TabFragment extends Fragment {
         public int getItemCount() {
             return mArrayList.size();
         }
+
+        @Override
+        public Filter getFilter() {
+            return filterlist1;
+        }
+
+        private Filter filterlist1 = new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                List<Model> filteredlist = new ArrayList<>();
+                if (constraint == null || constraint.length() == 0) {
+                    filteredlist.addAll(filterlist);
+
+                } else {
+                    String filterpatern = constraint.toString().toLowerCase().trim();
+                    for (Model item : filterlist)
+                        if (item.getTitle().toLowerCase().contains(filterpatern))
+                            filteredlist.add(item);
+                }
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = filteredlist;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                mArrayList.clear();
+                mArrayList.addAll((List) results.values);
+                notifyDataSetChanged();
+
+            }
+        };
 
         class RecycleVeiwHolder extends RecyclerView.ViewHolder {
             private TextView mTask;
