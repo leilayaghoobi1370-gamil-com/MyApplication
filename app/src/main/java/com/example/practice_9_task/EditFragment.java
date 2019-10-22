@@ -49,7 +49,7 @@ public class EditFragment extends DialogFragment {
     public static final String TABNAME_SPRINER = "com.example.practice_9_task_TABNAME_SPRINER";
     public static final String PASWORD_EDIT_FRAGMENT = "com.example.practice_9_task_TABNAME_pasword";
     EditText mEditTextdescrition, mEditTextTitle;
-    Button mBtnDate, mBtnTime, mBtnSave, mBtnCancle, mBtnEdit,mBtnDelete,mBtnDeleteAll;
+    Button mBtnDate, mBtnTime, mBtnSave, mBtnCancle, mBtnEdit,mBtnDelete;
     CheckBox mCheckBox;
     Spinner mSpinner;
     int FlagVisible = 0;
@@ -168,12 +168,12 @@ public class EditFragment extends DialogFragment {
                 if (!(mEditTextTitle.getText().toString().matches("") && mEditTextdescrition.getText().toString().matches("") &&
                         mBtnDate.getText().toString().matches("") && (mBtnTime.getText().toString().matches("")))) {
                     Model model = getModel();
-                    Repositroy.newInstance(getContext()).replace(getArguments().getString(KEY_NAME),getArguments().getString(PASWORD_EDIT_FRAGMENT), mModel, model);
+                    Repositroy.newInstance(getContext()).replace(getArguments().getString(KEY_NAME), getArguments().getString(PASWORD_EDIT_FRAGMENT), mModel, model);
                     FlagVisible = 1;
                     Intent intent = new Intent();
                     intent.putExtra(EDIT_TRUE, true);
                     intent.putExtra(FLAG_VISIBLE, FlagVisible);
-                    intent.putExtra(TABNAME_SPRINER, mSpinnername );
+                    intent.putExtra(TABNAME_SPRINER, mSpinnername);
                     Fragment fragment = getTargetFragment();
                     fragment.onActivityResult(REQUEST_CODE_EDIT_FRAGMENT, Activity.RESULT_OK, intent);
                     dismiss();
@@ -184,59 +184,26 @@ public class EditFragment extends DialogFragment {
         mBtnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Model model=getModel();
-               if( Repositroy.newInstance(getContext()).delete(((Model)getArguments().getSerializable(KEY_MODEL)),getArguments().getString(KEY_NAME)))
-               {
-                   Intent intent = new Intent();
-                   intent.putExtra(EDIT_TRUE, true);
-                   intent.putExtra(FLAG_VISIBLE, FlagVisible);
-                   intent.putExtra(TABNAME_SPRINER, mSpinnername );
-                   Fragment fragment = getTargetFragment();
-                   fragment.onActivityResult(REQUEST_CODE_EDIT_FRAGMENT, Activity.RESULT_OK, intent);
-                   dismiss();
+                Model model = getModel();
+                if (Repositroy.newInstance(getContext()).delete(((Model) getArguments().getSerializable(KEY_MODEL)), getArguments().getString(KEY_NAME))) {
+                    Intent intent = new Intent();
+                    intent.putExtra(EDIT_TRUE, true);
+                    intent.putExtra(FLAG_VISIBLE, FlagVisible);
+                    intent.putExtra(TABNAME_SPRINER, mSpinnername);
+                    Fragment fragment = getTargetFragment();
+                    fragment.onActivityResult(REQUEST_CODE_EDIT_FRAGMENT, Activity.RESULT_OK, intent);
+                    dismiss();
 
 
-               }
-               else
-               {
-                   Snackbar snackbar = Snackbar
-                           .make(mView, "UnSuccessFull Delete", Snackbar.LENGTH_LONG);
-                   snackbar.show();
-                   dismiss();
+                } else {
+                    Snackbar snackbar = Snackbar
+                            .make(mView, "UnSuccessFull Delete", Snackbar.LENGTH_LONG);
+                    snackbar.show();
+                    dismiss();
 
-               }
+                }
             }
         });
-       mBtnDeleteAll.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-               AlertDialog.Builder alertDialog2 = new AlertDialog.Builder(getContext());
-               alertDialog2.setTitle("Are Sure Delete All?");
-               alertDialog2.setPositiveButton("yes", new DialogInterface.OnClickListener() {
-                   @Override
-                   public void onClick(DialogInterface dialogInterface, int i) {
-                       Repositroy.newInstance(getContext()).deleteall(getArguments().getString(KEY_NAME),getArguments().getString(PASWORD_EDIT_FRAGMENT));
-                       Intent intent = new Intent();
-                       intent.putExtra(EDIT_TRUE, true);
-                       intent.putExtra(FLAG_VISIBLE, FlagVisible);
-                       intent.putExtra(TABNAME_SPRINER, mSpinnername );
-                       Fragment fragment = getTargetFragment();
-                       fragment.onActivityResult(REQUEST_CODE_EDIT_FRAGMENT, Activity.RESULT_OK, intent);
-                       dismiss();
-
-                   }
-               });
-               alertDialog2.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                   @Override
-                   public void onClick(DialogInterface dialogInterface, int i) {
-                       dismiss();
-                   }
-               });
-
-               alertDialog2.show();
-           }
-
-       });
     }
 
     private Model getModel() {
@@ -261,7 +228,6 @@ public class EditFragment extends DialogFragment {
         mCheckBox = mView.findViewById(R.id.edit_check_insert);
         mSpinner = mView.findViewById(R.id.edit_spinner);
         mBtnDelete=mView.findViewById(R.id.Delete);
-        mBtnDeleteAll=mView.findViewById(R.id.DeleteALL);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.planets_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinner.setAdapter(adapter);

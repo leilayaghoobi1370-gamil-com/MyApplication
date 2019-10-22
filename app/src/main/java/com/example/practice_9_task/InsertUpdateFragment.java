@@ -12,6 +12,9 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -42,7 +45,7 @@ public class InsertUpdateFragment extends DialogFragment {
     public static final String TABNAME_SPRINER = "com.example.practice_9_task.Repository.Repositroy_TABNAME_SPRINER";
     public static final String INSERTUBDDATE = "com.example.practice_9_task.Repository.Repositroy_insertubddate";
     public static final int REQUEST_CODE = 1;
-    public static final String KEYPASSWORD="com.example.practice_9_task.Repository.Repositroy_insertubddate+PASSWORD";
+    public static final String KEYPASSWORD = "com.example.practice_9_task.Repository.Repositroy_insertubddate+PASSWORD";
     int FlagVisible = 0;
     View mView, view, viewdate;
     EditText mEditTextdescrition, mEditTextTitle;
@@ -61,8 +64,9 @@ public class InsertUpdateFragment extends DialogFragment {
     private String strMin;
     private String am_pm;
     private String dateFormat;
+    private MenuItem delete;
 
-    public static InsertUpdateFragment newInstance(String tabname, String NAME,String PASSWORD) {
+    public static InsertUpdateFragment newInstance(String tabname, String NAME, String PASSWORD) {
 
         Bundle args = new Bundle();
         args.putString(SRTNG_CHECH_BOX, tabname);
@@ -86,6 +90,7 @@ public class InsertUpdateFragment extends DialogFragment {
             saveTime = savedInstanceState.getString(TIME_SAVE_INSTANCE);
 
         }
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -238,6 +243,7 @@ public class InsertUpdateFragment extends DialogFragment {
         outState.putString(DATA_SAVE_INSTANCE, mBtnDate.getText().toString());
         outState.putString(TIME_SAVE_INSTANCE, mBtnTime.getText().toString());
 
-
     }
+
+
 }

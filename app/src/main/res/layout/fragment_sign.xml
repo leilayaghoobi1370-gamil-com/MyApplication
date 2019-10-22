@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/leila"
+    android:background="@color/colorAccent"
     android:gravity="center"
     android:orientation="vertical"
     android:paddingLeft="24dp"
@@ -23,8 +23,7 @@
         android:drawableLeft="@drawable/ic_account_circle_black_24dp"
         android:hint="Enter name"
         android:padding="15dp"
-        tools:ignore="MissingConstraints"
-        />
+        tools:ignore="MissingConstraints" />
 
     <EditText
         android:id="@+id/password_login"
@@ -38,8 +37,7 @@
         android:drawableLeft="@drawable/ic_https_black_24dp"
         android:hint="Enter Password"
         android:inputType="textPassword"
-        android:padding="15dp"
-         />
+        android:padding="15dp" />
 
     <LinearLayout
         android:layout_width="wrap_content"

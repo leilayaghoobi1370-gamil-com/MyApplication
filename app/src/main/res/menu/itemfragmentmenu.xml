@@ -9,15 +9,4 @@
         android:title="Item"
         app:showAsAction="always" />
 
-    <item
-        android:id="@+id/id_delete"
-        android:icon="@android:drawable/ic_menu_delete"
-        android:title="Item"
-        app:showAsAction="always" />
-    <item
-        android:id="@+id/id_sreach"
-        android:icon="@drawable/ic_launcher_sreach_foreground"
-        android:title="Search"
-        app:actionViewClass="android.widget.SearchView"
-        app:showAsAction="always" />
 </menu>

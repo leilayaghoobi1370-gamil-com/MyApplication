@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.fragment.app.Fragment;
@@ -15,10 +16,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.example.practice_9_task.Model.Model;
@@ -38,7 +43,7 @@ public class TabFragment extends Fragment {
     public static final String KEYNAME = "key";
     public static final String KEYPASSWORD = "KEYPASSWORD";
     private RecyclerView mRecyclerView;
-
+    private MenuItem search;
     private FloatingActionButton mFloatingActionButton;
     View mView1;
     RecycleAdapter recycleAdapter;
@@ -84,6 +89,12 @@ public class TabFragment extends Fragment {
         return mView1;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
     public void init() {
         mRecyclerView = mView1.findViewById(R.id.recyclerview);
         mFloatingActionButton = mView1.findViewById(R.id.floatingActionButton_fragment_add);
@@ -95,9 +106,10 @@ public class TabFragment extends Fragment {
         public static final String EDIT_FRAGMENT = "Edit Fragment";
         public static final String TAG = "TAG";
         private List<Model> filterlist = new ArrayList<>();
+
         public void setArrayList(ArrayList<Model> arrayList) {
             mArrayList = arrayList;
-            filterlist=arrayList;
+            filterlist = arrayList;
         }
 
         private ArrayList<Model> mArrayList = new ArrayList<Model>();
@@ -111,7 +123,7 @@ public class TabFragment extends Fragment {
             mArrayList = arrayList;
             mContext = context;
             mKey = key;
-           filterlist=new ArrayList<>(arrayList);
+            filterlist = new ArrayList<>(arrayList);
         }
 
 
@@ -232,6 +244,28 @@ public class TabFragment extends Fragment {
 
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.itemsearchview, menu);
+        search = menu.findItem(R.id.id_sreach);
+        SearchView searchView = (SearchView) search.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                recycleAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+
+    }
+
 
 }
+
+
 

@@ -123,14 +123,6 @@
             android:layout_margin="5dp"
             android:text="Delete" />
 
-        <Button
-            android:id="@+id/DeleteALL"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.5"
-            android:background="@color/colorAccent"
-            android:layout_margin="5dp"
-            android:text="DeleteALL" />
     </LinearLayout>
 
 </LinearLayout>

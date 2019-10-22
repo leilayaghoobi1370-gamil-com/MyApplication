@@ -86,21 +86,8 @@ public class ListTaskActivity extends AppCompatActivity {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.itemfragmentmenu, menu);
         account = menu.findItem(R.id.id_account);
-        sreach = menu.findItem(R.id.id_sreach);
-        delete = menu.findItem(R.id.id_delete);
-        SearchView searchView = (SearchView) sreach.getActionView();
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                mRecycleAdapter.getFilter().filter(newText);
-                return false;
-            }
-        });
+
         return true;
     }
 
@@ -109,9 +96,6 @@ public class ListTaskActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.id_account:
                 this.finish();
-                return true;
-            case R.id.id_delete:
-                Toast.makeText(this, "create search", Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
